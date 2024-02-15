@@ -43,6 +43,7 @@ size_t editDistance(const std::string& s1, const std::string& s2) {
 }
 
 int main() {
+    std::cout << editDistance("kitten", "sitting") << std::endl;
     std::cout << editDistance("a cat!", "two cats!") << std::endl;
     std::cout << editDistance("o rato roeu a roupa do rei de roma", "a roupa do rato de roma roeu o rei") << std::endl;
     return 0;
