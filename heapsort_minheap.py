@@ -26,12 +26,6 @@ def sift_down(heap, i, size=None):
         sift_down(heap, min_index, size)
 
 
-def sift_up(heap, i):
-    while i > 0 and heap[parent(i)] > heap[i]:
-        heap[parent(i)], heap[i] = heap[i], heap[parent(i)]
-        i = parent(i)
-
-
 def pop(heap):
     heap[0], heap[-1] = heap[-1], heap[0]
     max_value = heap.pop()
