@@ -53,9 +53,15 @@ list_of_nums = [
     [-10, 7, -3, -2, 9, 5, -1, 3]
 ]
 
+# adds random lists of 10_000 elements
+for exponent in range(2, 8):
+    max_element = 10 ** exponent
+    random_list = [random.randint(-max_element, max_element) for _ in range(10000)]
+    list_of_nums.append(random_list)
+
 schemes = [PartitionSchemes.lomuto, PartitionSchemes.randomized_lomuto]
 
 for nums in list_of_nums:
     for scheme in schemes:
         quicksort(nums, 0, len(nums) - 1, scheme)
-        print(f"{scheme.__name__}: {nums}")
+        print(f"{scheme.__name__} > is sorted? {nums == sorted(nums)}: {nums}")
