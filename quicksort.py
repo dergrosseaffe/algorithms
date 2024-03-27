@@ -58,4 +58,4 @@ schemes = [PartitionSchemes.lomuto, PartitionSchemes.randomized_lomuto]
 for nums in list_of_nums:
     for scheme in schemes:
         quicksort(nums, 0, len(nums) - 1, scheme)
-        print(scheme.__name__, ":", nums)
+        print(f"{scheme.__name__}: {nums}")
