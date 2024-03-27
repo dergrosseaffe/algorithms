@@ -1,24 +1,44 @@
-def partition(list, left, right):
-    pivot = list[right]
-    i = left - 1
-
-    for j in range(left, right):
-        if list[j] <= pivot:
-            i += 1
-            list[i], list[j] = list[j], list[i]
-
-    list[i + 1], list[right] = list[right], list[i + 1]
-    return i + 1
+import random
 
 
-def quicksort(list, left, right):
+class PartitionSchemes:
+    @staticmethod
+    def lomuto(list, left, right):
+        pivot = list[right]
+        i = left - 1
+
+        for j in range(left, right):
+            if list[j] <= pivot:
+                i += 1
+                list[i], list[j] = list[j], list[i]
+
+        list[i + 1], list[right] = list[right], list[i + 1]
+        return i + 1
+
+    @staticmethod
+    def randomized_lomuto(list, left, right):
+        pivot_index = random.randint(left, right)
+        list[right], list[pivot_index] = list[pivot_index], list[right]
+        pivot = list[right]
+        i = left - 1
+
+        for j in range(left, right):
+            if list[j] <= pivot:
+                i += 1
+                list[i], list[j] = list[j], list[i]
+
+        list[i + 1], list[right] = list[right], list[i + 1]
+        return i + 1
+
+
+def quicksort(list, left, right, partition_scheme):
     if left >= right:
         return
 
-    m = partition(list, left, right)
+    m = partition_scheme(list, left, right)
 
-    quicksort(list, left, m - 1)
-    quicksort(list, m + 1, right)
+    quicksort(list, left, m - 1, partition_scheme)
+    quicksort(list, m + 1, right, partition_scheme)
 
 
 list_of_nums = [
@@ -33,6 +53,9 @@ list_of_nums = [
     [-10, 7, -3, -2, 9, 5, -1, 3]
 ]
 
+schemes = [PartitionSchemes.lomuto, PartitionSchemes.randomized_lomuto]
+
 for nums in list_of_nums:
-    quicksort(nums, 0, len(nums) - 1)
-    print(nums)
+    for scheme in schemes:
+        quicksort(nums, 0, len(nums) - 1, scheme)
+        print(scheme.__name__, ":", nums)
