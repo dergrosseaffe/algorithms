@@ -33,8 +33,8 @@ def pop(heap):
     return max_value
 
 
-def heapify(nums, start_index=0):
-    for i in range(len(nums)//2, start_index - 1, -1):
+def heapify(nums):
+    for i in range(len(nums)//2, -1, -1):
         sift_down(nums, i)
 
 

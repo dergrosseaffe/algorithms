@@ -33,13 +33,13 @@ def pop(heap):
     return max_value
 
 
-def heapify(nums, start_index=0):
-    for i in range(len(nums)//2, start_index - 1, -1):
+def heapify(nums):
+    for i in range(len(nums)//2, - 1, -1):
         sift_down(nums, i)
 
 
 def heapsort(heap):
-    heapify(heap, 0)
+    heapify(heap)
     for i in range(len(heap) - 1, 0, -1):
         heap[0], heap[i] = heap[i], heap[0]
         sift_down(heap, 0, i)
