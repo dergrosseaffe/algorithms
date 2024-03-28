@@ -1,3 +1,5 @@
+import random
+
 
 def right(i):
     return 2 * i + 2
@@ -57,3 +59,11 @@ print("After 4 pops:", nums)
 nums = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 heapsort(nums)
 print("Sorted:", nums)
+
+nums = [random.randint(-2**31, 2**31 - 1) for _ in range(1_000_015)]
+heapify(nums)
+for _ in range(15):
+    print("Pop:", pop(nums))
+
+heapsort(nums)
+print("Sorted 1mi:", nums == sorted(nums))
