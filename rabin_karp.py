@@ -1,34 +1,34 @@
 import random
 
 
-def poly_hash(s, x, prime):
+def poly_hash(s, random_x, prime):
     hash = 0
     for char in reversed(s):
-        hash = (hash * x + ord(char)) % prime
+        hash = (hash * random_x + ord(char)) % prime
     return hash
 
 
 def rabin_karp(s, t):
     prime = 1000000007
-    x = random.randint(1, prime - 1)
+    random_x = random.randint(1, prime - 1)
 
     positions = []
-    hash = poly_hash(t, x, prime)
+    t_hash = poly_hash(t, random_x, prime)
     S, T, y = len(s), len(t), 1
-    H = [0] * (S - T + 1)
+    s_hashes = [0] * (S - T + 1)
 
     if T > S:
         return positions
 
     for _ in range(T):
-        y = (y * x) % prime
-    H[S - T] = poly_hash(s[(S - T):], x, prime)
+        y = (y * random_x) % prime
+    s_hashes[S - T] = poly_hash(s[(S - T):], random_x, prime)
 
     for i in range(S - T - 1, -1, -1):
-        H[i] = (x * H[i + 1] + ord(s[i]) - (y * ord(s[i + T]))) % prime
+        s_hashes[i] = (random_x * s_hashes[i + 1] + ord(s[i]) - (y * ord(s[i + T]))) % prime
 
     for i in range(S - T + 1):
-        if hash == H[i] and s[i:i + T] == t:
+        if t_hash == s_hashes[i] and s[i:i + T] == t:
             positions.append(i)
 
     return positions
