@@ -7,25 +7,31 @@ def poly_hash(s, random_x, prime):
         hash = (hash * random_x + ord(char)) % prime
     return hash
 
+def precompute_hashes(s, t, prime, random_x):
+    S, T, y = len(s), len(t), 1
+    s_hashes = [0] * (S - T + 1)
+    s_hashes[S - T] = poly_hash(s[(S - T):], random_x, prime)
+
+    for _ in range(T):
+        y = (y * random_x) % prime
+
+    for i in range(S - T - 1, -1, -1):
+        s_hashes[i] = (random_x * s_hashes[i + 1] + ord(s[i]) - (y * ord(s[i + T]))) % prime
+
+    return s_hashes
 
 def rabin_karp(s, t):
+    S, T = len(s), len(t)
+
+    if T > S:
+        return []
+
     prime = 1000000007
     random_x = random.randint(1, prime - 1)
 
     positions = []
     t_hash = poly_hash(t, random_x, prime)
-    S, T, y = len(s), len(t), 1
-    s_hashes = [0] * (S - T + 1)
-
-    if T > S:
-        return positions
-
-    for _ in range(T):
-        y = (y * random_x) % prime
-    s_hashes[S - T] = poly_hash(s[(S - T):], random_x, prime)
-
-    for i in range(S - T - 1, -1, -1):
-        s_hashes[i] = (random_x * s_hashes[i + 1] + ord(s[i]) - (y * ord(s[i + T]))) % prime
+    s_hashes = precompute_hashes(s, t, prime, random_x)
 
     for i in range(S - T + 1):
         if t_hash == s_hashes[i] and s[i:i + T] == t:
