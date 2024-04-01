@@ -7,6 +7,7 @@ def poly_hash(s, random_x, prime):
         hash = (hash * random_x + ord(char)) % prime
     return hash
 
+
 def precompute_hashes(s, t, prime, random_x):
     S, T, y = len(s), len(t), 1
     s_hashes = [0] * (S - T + 1)
@@ -19,6 +20,7 @@ def precompute_hashes(s, t, prime, random_x):
         s_hashes[i] = (random_x * s_hashes[i + 1] + ord(s[i]) - (y * ord(s[i + T]))) % prime
 
     return s_hashes
+
 
 def rabin_karp(s, t):
     S, T = len(s), len(t)
